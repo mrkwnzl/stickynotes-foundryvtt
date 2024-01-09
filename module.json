@@ -1,0 +1,32 @@
+{
+  "id": "stickynotes",
+  "title": "Sticky Notes",
+  "description": "Create sticky note text drawings",
+  "version": "1.0.0",
+  "esmodules": [
+    "module/stickynotes.js"
+  ],
+  "styles": [
+    "css/stickynotes.css"
+  ],
+  "url": "https://github.com/mrkwnzl/sticky-notes-foundryvtt",
+  "manifest": "https://raw.githubusercontent.com/mrkwnzl/sticky-notes-foundryvtt/main/module.json",
+  "download": "https://github.com/mrkwnzl/sticky-notes-foundryvtt/releases/download/v1.2.0/release.zip",
+  "authors": [
+    {
+      "name": "Marko Wenzel",
+      "flags": {}
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11.315"
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ]
+}

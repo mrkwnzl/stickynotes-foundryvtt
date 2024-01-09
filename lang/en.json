@@ -1,0 +1,12 @@
+{
+  "STICKYNOTES.Title": "Sticky Notes",
+  "STICKYNOTES.Yellow": "Yellow",
+  "STICKYNOTES.Red": "Red",
+  "STICKYNOTES.Green": "Green",
+  "STICKYNOTES.Blue": "Blue",
+  "STICKYNOTES.CreateStickyNote": "Create Sticky Note",
+  "STICKYNOTES.EditStickyNote": "Edit Sticky Note",
+  "STICKYNOTES.EditStickyNoteControls": "Edit or Convert to Sticky Note",
+  "STICKYNOTES.EnableDrawingTools": "Stay on Drawing Tools",
+  "STICKYNOTES.EnableDrawingToolsHint": "If this is enabled, the drawing tools stay active when a new sticky note is created. Otherwise the controls return to the tool before the sticky note was created."
+}
