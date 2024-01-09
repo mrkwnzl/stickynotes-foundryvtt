@@ -1,0 +1,12 @@
+{
+  "STICKYNOTES.Title": "Sticky Notes",
+  "STICKYNOTES.Yellow": "Geld",
+  "STICKYNOTES.Red": "Rot",
+  "STICKYNOTES.Green": "Grün",
+  "STICKYNOTES.Blue": "Blau",
+  "STICKYNOTES.CreateStickyNote": "Sticky Note erstellen",
+  "STICKYNOTES.EditStickyNote": "Sticky Note ändern",
+  "STICKYNOTES.EditStickyNoteControls": "Sticky Note ändern oder konvertieren",
+  "STICKYNOTES.EnableDrawingTools": "Bei Zeichenwerkzeugen bleiben",
+  "STICKYNOTES.EnableDrawingToolsHint": "Wenn diese Einstellung aktiv ist, bleiben die Zeichenwerkzeuge aktiv, nachdem eine Sticky Note erstellt wurde. Andernfalls kehrt man zu den vorigen Werkzeugen zurück."
+}
