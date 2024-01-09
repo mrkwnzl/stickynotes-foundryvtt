@@ -5,7 +5,7 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/mrkwnzl/stickynotes-foundryvtt/total?style=flat-square)
 <a href="https://www.buymeacoffee.com/mrkwnzl" target="_blank">![Support](https://img.shields.io/badge/support-Buy%20Me%20a%20Coffee-blue?style=flat-square)</a>
 
-This module adds a quick way to create and edit sticky notes. Sticky notes are styled text drawings with all benefits and limitations this comes with. To create a sticky note, go to the drawing layer controls and press the “Sticky Note” button. This button is context sensitive, meaning that one of three thigs might happen:
+This module adds a quick way to create and edit sticky notes. Sticky notes are styled text drawings with all benefits and limitations this comes with. To create a sticky note, go to the drawing layer controls and press the “Sticky Note” button. This button is context sensitive, meaning that one of three things might happen:
 
 1. If you don’t have a sticky note or other text drawing selected, a dialog pops up with which you can enter the text and color of the sticky note. All open windows will be minimized and you can drag the note to whereever you want. With a mouse click, you stick the note to the canvas. After that, all windows that have been minimized will be maximized again.
 2. If you have a sticky note selected, a dialog pops up with which you can change the test or color. All other cutomizations (such as the size) will remain.
