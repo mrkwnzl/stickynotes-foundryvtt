@@ -13,8 +13,8 @@ This module adds a quick way to create and edit sticky notes. Sticky notes are s
 
 In the controls settings, there are two keyboard shortcuts:
 
-1. Create Sticky Note (default Alt + N): This will create a sticky note, regardless of whether a sticky note is already selected.
-2. Edit Sticky Note (default Alt + E): This will edit a sticky note or convert a text drawing that isn’t already a sticky note.
+1. Create Sticky Note (default `Alt + N`): This will create a sticky note, regardless of whether a sticky note is already selected.
+2. Edit Sticky Note (default `Alt + E`): This will edit a sticky note or convert a text drawing that isn’t already a sticky note.
 
 The use of Advanced Drawing Tools is recommended. If this module is installed and active, some styling exclusive to Advanced Drawing Tools is applied to the sticky notes.
 
