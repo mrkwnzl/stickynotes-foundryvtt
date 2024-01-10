@@ -190,14 +190,48 @@ Hooks.on("init", () => {
     default: false,
     config: true
   });
+
+  game.settings.register("stickynotes", "noteSizeSetting", {
+    name: game.i18n.localize("STICKYNOTES.NoteSizeSetting"),
+    hint: game.i18n.localize("STICKYNOTES.NoteSizeSettingHint"),
+    scope: "world",
+    type: Number,
+    default: 1,
+    choices: {
+      0: game.i18n.localize("STICKYNOTES.Small"),
+      1: game.i18n.localize("STICKYNOTES.Medium"),
+      2: game.i18n.localize("STICKYNOTES.Large")
+    },
+    config: true
+  });
+
+  game.settings.register("stickynotes", "scaleNoteSizeSetting", {
+    name: game.i18n.localize("STICKYNOTES.ScaleNoteSizeSetting"),
+    hint: game.i18n.localize("STICKYNOTES.ScaleNoteSizeSettingHint"),
+    scope: "world",
+    type: Boolean,
+    default: true,
+    config: true
+  });
+
+  game.settings.register("stickynotes", "scaleFontSizeSetting", {
+    name: game.i18n.localize("STICKYNOTES.ScaleFontSizeSetting"),
+    hint: game.i18n.localize("STICKYNOTES.ScaleFontSizeSettingHint"),
+    scope: "world",
+    type: Boolean,
+    default: true,
+    config: true
+  });
 });
 
 Hooks.on("getSceneControlButtons", function (hudButtons) {
+  console.log(hudButtons);
   let drawingControls = hudButtons.find(val => {
     return val.name == "drawings";
   });
   if (drawingControls) {
-    drawingControls.tools.push({
+    let index = drawingControls.tools.findIndex(tool => tool.name === "text") + 1;
+    let stickyNoteButton = {
       name: "stickyNote",
       title: game.i18n.localize("STICKYNOTES.Title"),
       icon: "fa-solid fa-note-sticky",
@@ -205,7 +239,8 @@ Hooks.on("getSceneControlButtons", function (hudButtons) {
         main(true);
       },
       button: true
-    });
+    };
+    drawingControls.tools.splice(index, 0, stickyNoteButton);
   }
 });
 
@@ -214,12 +249,16 @@ async function createNoteData(data) {
   let rotationRNG = Math.floor(Math.random() * 11) - 5;
   let textureRNG = Math.floor(Math.random() * 5) + 1;
 
+  // Get size settings
+  let noteSizeSettings = await getSizeSettings();
+  console.log(noteSizeSettings);
+
   // Create object
   data = Object.assign({
     // Size and rotation
     shape: {
-      width: 512,
-      height: 512
+      width: noteSizeSettings[0],
+      height: noteSizeSettings[0]
     },
     rotation: rotationRNG,
 
@@ -241,7 +280,7 @@ async function createNoteData(data) {
     // Text
     textOpacity: 1,
     textColor: "#000000",
-    textSize: 48,
+    fontSize: noteSizeSettings[1],
     flags: {
       "stickynotes": {
         "isStickyNote": true
@@ -257,6 +296,36 @@ async function createNoteData(data) {
   }, data);
 
   return data;
+}
+
+async function getSizeSettings() {
+  // Set canvas  size
+  const canvasSize = Math.min(game.scenes.current.dimensions.sceneHeight, game.scenes.current.dimensions.sceneWidth);
+
+  // Set scaling factor
+  if (game.settings.get("stickynotes", "noteSizeSetting") == 0) {
+    var scalingFactor = 0.5;
+  } else if (game.settings.get("stickynotes", "noteSizeSetting") == 1) {
+    var scalingFactor = 1;
+  } else if (game.settings.get("stickynotes", "noteSizeSetting") == 2) {
+    var scalingFactor = 1.5;
+  }
+
+  // Set note size
+  if (game.settings.get("stickynotes", "scaleNoteSizeSetting")) {
+    var noteSize = Math.floor(canvasSize / 8) * scalingFactor;
+  } else {
+    var noteSize = 512 * scalingFactor;
+  }
+
+  // Set font size
+  if (game.settings.get("stickynotes", "scaleFontSizeSetting")) {
+    var fontSize = Math.floor(48 * scalingFactor);
+  } else {
+    var fontSize = 48;
+  }
+
+  return [noteSize, fontSize];
 }
 
 async function main(create) {

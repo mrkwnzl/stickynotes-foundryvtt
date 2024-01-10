@@ -7,6 +7,15 @@
   "STICKYNOTES.CreateStickyNote": "Sticky Note erstellen",
   "STICKYNOTES.EditStickyNote": "Sticky Note ändern",
   "STICKYNOTES.EditStickyNoteControls": "Sticky Note ändern oder konvertieren",
-  "STICKYNOTES.EnableDrawingTools": "Bei Zeichenwerkzeugen bleiben",
-  "STICKYNOTES.EnableDrawingToolsHint": "Wenn diese Einstellung aktiv ist, bleiben die Zeichenwerkzeuge aktiv, nachdem eine Sticky Note erstellt wurde. Andernfalls kehrt man zu den vorigen Werkzeugen zurück."
+  "STICKYNOTES.EnableDrawingTools": "Zu Zeichenwerkzeugen wechseln",
+  "STICKYNOTES.EnableDrawingToolsHint": "Wenn diese Einstellung aktiv ist, wechseln die Layerkontrollen zu den Zeichenwerkzeugen, nachdem eine Sticky Note erstellt wurde.",
+  "STICKYNOTES.Small": "Klein (0.5)",
+  "STICKYNOTES.Medium": "Medium (1)",
+  "STICKYNOTES.Large": "Groß (1.5)",
+  "STICKYNOTES.NoteSizeSetting": "Note-Größe einstellen",
+  "STICKYNOTES.NoteSizeSettingHint": "Dies setzt die Größe der Sticky Notes (Grundgröße: 512 px). Diese Einstellung gilt nur für neu erstellte Notizen.",
+  "STICKYNOTES.ScaleFontSizeSetting": "Skalierte Schriftgröße",
+  "STICKYNOTES.ScaleFontSizeSettingHint": "Diese Einstellung skaliert die Schriftgröße basierend auf der Größe der Sticky Note. Wenn diese Einstellung deaktiviert ist, haben alle Sticky Notes eine Schriftgröße von 48 pt. Diese Einstellung gilt nur für neu erstellte Notizen.",
+  "STICKYNOTES.ScaleNoteSizeSetting": "Skalierte Note-Größe",
+  "STICKYNOTES.ScaleNoteSizeSettingHint": "Diese Einstellung skaliert die Grundgröße der Sticky Notes im Verhältnis zur Größe des Kanvases. Dies kann mit den Einstellungen für Note-Größe und Schriftgröße kombiniert werden. Diese Einstellung gilt nur für neu erstellte Notizen."
 }
