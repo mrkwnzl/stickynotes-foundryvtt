@@ -132,7 +132,7 @@ class DrawingWithPreview extends Drawing {
   async _onConfirmPlacement(event) {
     await this._finishPlacement(event);
     const interval = canvas.grid.type === CONST.GRID_TYPES.GRIDLESS ? 0 : 2;
-    const destination = canvas.grid.getSnappedPosition(this.document.x, this.document.y, interval);
+    const destination = canvas.grid.getSnappedPoint(this.document.x, this.document.y, interval);
     this.document.updateSource(destination);
     this.#events.resolve(canvas.scene.createEmbeddedDocuments("Drawing", [this.document.toObject()]));
   }
@@ -225,7 +225,6 @@ Hooks.on("init", () => {
 });
 
 Hooks.on("getSceneControlButtons", function (hudButtons) {
-  console.log(hudButtons);
   let drawingControls = hudButtons.find(val => {
     return val.name == "drawings";
   });
@@ -251,10 +250,12 @@ async function createNoteData(data) {
 
   // Get size settings
   let noteSizeSettings = await getSizeSettings();
-  console.log(noteSizeSettings);
 
   // Create object
   data = Object.assign({
+    // Options
+    interface: true,
+
     // Size and rotation
     shape: {
       width: noteSizeSettings[0],
