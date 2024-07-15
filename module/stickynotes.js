@@ -131,8 +131,7 @@ class DrawingWithPreview extends Drawing {
    */
   async _onConfirmPlacement(event) {
     await this._finishPlacement(event);
-    const interval = canvas.grid.type === CONST.GRID_TYPES.GRIDLESS ? 0 : 2;
-    const destination = canvas.grid.getSnappedPoint(this.document.x, this.document.y, interval);
+    const destination = canvas.grid.getSnappedPoint({x: this.document.x, y: this.document.y}, {mode: 0});
     this.document.updateSource(destination);
     this.#events.resolve(canvas.scene.createEmbeddedDocuments("Drawing", [this.document.toObject()]));
   }
