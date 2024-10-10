@@ -149,6 +149,11 @@ class DrawingWithPreview extends Drawing {
 }
 
 Hooks.on("init", () => {
+  // API
+  game.stickynotes = {
+    createStickyNoteMacro
+  };
+
   // Register keybindings
   const {SHIFT, CONTROL, ALT} = KeyboardManager.MODIFIER_KEYS;
 
@@ -242,9 +247,11 @@ Hooks.on("getSceneControlButtons", function (hudButtons) {
   }
 });
 
+let dialogWidth = 500;
+
 async function createNoteData(data) {
   // RNGs
-  let rotationRNG = Math.floor(Math.random() * 11) - 5;
+  let rotationRNG = await getRotation();
   let textureRNG = Math.floor(Math.random() * 5) + 1;
 
   // Get size settings
@@ -281,6 +288,11 @@ async function createNoteData(data) {
     textOpacity: 1,
     textColor: "#000000",
     fontSize: noteSizeSettings[1],
+
+    // Visibility
+    hidden: false,
+
+    // Flags
     flags: {
       "stickynotes": {
         "isStickyNote": true
@@ -328,6 +340,10 @@ async function getSizeSettings() {
   return [noteSize, fontSize];
 }
 
+async function getRotation() {
+  return Math.floor(Math.random() * 11) - 5;
+}
+
 async function main(create) {
   // Get data and note
   let data = await createNoteData();
@@ -354,6 +370,7 @@ async function newStickyNote(data) {
         callback: async (html) => {
           data.text = html.find('input').val();
           data.fillColor = data.fillColorYellow;
+          data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
           await drawing.drawPreview();
         }
@@ -364,6 +381,7 @@ async function newStickyNote(data) {
         callback: async (html) => {
           data.text = html.find('input').val();
           data.fillColor = data.fillColorRed;
+          data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
           await drawing.drawPreview();
         }
@@ -374,6 +392,7 @@ async function newStickyNote(data) {
         callback: async (html) => {
           data.text = html.find('input').val();
           data.fillColor = data.fillColorGreen;
+          data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
           await drawing.drawPreview();
         }
@@ -384,6 +403,7 @@ async function newStickyNote(data) {
         callback: async (html) => {
           data.text = html.find('input').val();
           data.fillColor = data.fillColorBlue;
+          data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
           await drawing.drawPreview();
         }
@@ -391,20 +411,24 @@ async function newStickyNote(data) {
     },
     default: "createYellow",
     close: () => {}
+  }, {
+    width: dialogWidth
   });
   d.render(true);
 }
 
 async function editNote(note, data) {
   let defaultButton = "updateYellow";
-  if (note.fillColor == data.fillColorYellow) {
+  if (note.fillColor.css == data.fillColorYellow) {
     defaultButton = "updateYellow";
-  } else if (note.fillColor == data.fillColorRed) {
+  } else if (note.fillColor.css == data.fillColorRed) {
     defaultButton = "updateRed";
-  } else if (note.fillColor == data.fillColorGreen) {
+  } else if (note.fillColor.css == data.fillColorGreen) {
     defaultButton = "updateGreen";
-  } else if (note.fillColor == data.fillColorBlue) {
+  } else if (note.fillColor.css == data.fillColorBlue) {
     defaultButton = "updateBlue";
+  } else {
+    defaultButton = "updateCustom";
   }
 
   let d = new Dialog({
@@ -455,9 +479,21 @@ async function editNote(note, data) {
           canvas.drawings.draw();
         }
       },
+      updateCustom: {
+        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${note.fillColor};"></i>`,
+        label: game.i18n.localize("STICKYNOTES.Custom"),
+        callback: async (html) => {
+          await note.update({
+            "text": html.find('input').val(),
+          });
+          canvas.drawings.draw();
+        }
+      }
     },
     default: defaultButton,
     close: () => {}
+  }, {
+    width: dialogWidth
   });
   d.render(true);
 }
@@ -524,6 +560,63 @@ async function convertToNote(note, data) {
     },
     default: defaultButton,
     close: () => {}
+  }, {
+    width: dialogWidth
+  });
+  d.render(true);
+}
+
+async function createStickyNoteMacro(data) {
+  // Set data
+  data = await createNoteData(data);
+
+  // RNGs
+  let rotationRNG = await getRotation();
+
+  // Get size settings
+  let noteSizeSettings = await getSizeSettings();
+
+  // Size
+  if (!data.shape.width || !data.shape.height) {
+    data.shape.width = noteSizeSettings[0];
+    data.shape.height = noteSizeSettings[0];
+  };
+
+  if (!data.rotation) {data.rotation = rotationRNG;}
+
+  // Border
+  if (!data.strokeOpacity) {data.strokeOpacity = 1;}
+  if (!data.strokeColor) {data.strokeColor = "#000000";}
+  if (!data.strokeWidth) {data.strokeWidth = 1;}
+
+  // Fill color
+  if (!data.fillColor) {data.fillColor = "#fff0a3";}
+
+  // Text
+  if (!data.textOpacity) {data.textOpacity = 1;}
+  if (!data.textColor) {data.textColor = "#000000";}
+  if (!data.fontSize) {data.fontSize = 48;}
+
+  // Create dialog
+  let d = new Dialog({
+    title: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
+    content: `<input class="stickynotes text-input" type="text" autofocus />`,
+    buttons: {
+      createNote: {
+        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColor};"></i>`,
+        label: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
+        callback: async (html) => {
+          data.text = html.find('input').val();
+          data.hidden = event.altKey;
+          const drawing = DrawingWithPreview.fromData(data);
+          await drawing.drawPreview();
+        }
+      }
+    },
+    default: "createNote",
+    close: () => {}
+  }, {
+    width: dialogWidth
   });
   d.render(true);
 }
