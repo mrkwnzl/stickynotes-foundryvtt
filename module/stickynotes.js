@@ -1,4 +1,4 @@
-class DrawingWithPreview extends Drawing {
+class DrawingWithPreview extends foundry.canvas.placeables.Drawing {
   /**
   * Track the timestamp when the last mouse move event was captured.
   * @type {number}
@@ -155,7 +155,7 @@ Hooks.on("init", () => {
   };
 
   // Register keybindings
-  const {SHIFT, CONTROL, ALT} = KeyboardManager.MODIFIER_KEYS;
+  const {SHIFT, CONTROL, ALT} = foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS;
 
   game.keybindings.register("stickynotes", "createStickyNote", {
     name: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
@@ -228,23 +228,17 @@ Hooks.on("init", () => {
   });
 });
 
-Hooks.on("getSceneControlButtons", function (hudButtons) {
-  let drawingControls = hudButtons.find(val => {
-    return val.name == "drawings";
-  });
-  if (drawingControls) {
-    let index = drawingControls.tools.findIndex(tool => tool.name === "text") + 1;
-    let stickyNoteButton = {
-      name: "stickyNote",
-      title: game.i18n.localize("STICKYNOTES.Title"),
-      icon: "fa-solid fa-note-sticky",
-      onClick: () => {
-        main(true);
-      },
-      button: true
-    };
-    drawingControls.tools.splice(index, 0, stickyNoteButton);
-  }
+Hooks.on("getSceneControlButtons", (controls) => {
+  controls.drawings.tools.stickyNote = {
+    name: "stickyNote",
+    order: 6.1,
+    title: game.i18n.localize("STICKYNOTES.Title"),
+    icon: "fa-solid fa-note-sticky",
+    onChange: (event, active) => {
+      main(true);
+    },
+    button: true
+  };
 });
 
 let dialogWidth = 500;
