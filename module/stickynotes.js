@@ -354,61 +354,62 @@ async function main(create) {
 }
 
 async function newStickyNote(data) {
-  let d = new Dialog({
-    title: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
-    content: `<input class="stickynotes text-input" type="text" autofocus />`,
-    buttons: {
-      createYellow: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorYellow};"></i>`,
+  return foundry.applications.api.DialogV2.wait({
+    window: {
+      title: game.i18n.localize("STICKYNOTES.CreateStickyNote")
+    },
+    content: `<input name="input" class="stickynotes text-input" type="text" autofocus />`,
+    buttons: [
+      {
+        action: "createYellow",
+        icon: "stickynotes fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Yellow"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorYellow;
           data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
-          await drawing.drawPreview();
+          drawing.drawPreview();
         }
       },
-      createRed: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorRed};"></i>`,
+      {
+        action: "createRed",
+        icon: "stickynotes fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Red"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorRed;
           data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
-          await drawing.drawPreview();
+          drawing.drawPreview();
         }
       },
-      createGreen: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorGreen};"></i>`,
+      {
+        action: "createGreen",
+        icon: "stickynotes fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Green"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorGreen;
           data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
-          await drawing.drawPreview();
+          drawing.drawPreview();
         }
       },
-      createBlue: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorBlue};"></i>`,
+      {
+        action: "createBlue",
+        icon: "stickynotes fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Blue"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorBlue;
           data.hidden = event.altKey;
           const drawing = DrawingWithPreview.fromData(data);
-          await drawing.drawPreview();
+          drawing.drawPreview();
         }
       }
-    },
-    default: "createYellow",
-    close: () => {}
-  }, {
-    width: dialogWidth
+    ]
   });
-  d.render(true);
 }
 
 async function editNote(note, data) {
@@ -425,71 +426,73 @@ async function editNote(note, data) {
     defaultButton = "updateCustom";
   }
 
-  let d = new Dialog({
-    title: game.i18n.localize("STICKYNOTES.EditStickyNote"),
-    content: `<input class="stickynotes text-input" type="text" value="${note.text}" autofocus />`,
-    buttons: {
-      updateYellow: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorYellow};"></i>`,
+  return foundry.applications.api.DialogV2.wait({
+    window: {
+      title: game.i18n.localize("STICKYNOTES.EditStickyNote")
+    },
+    content: `<input name="input" class="stickynotes text-input" type="text" value="${note.text}" autofocus />`,
+    buttons: [
+      {
+        action: "updateYellow",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Yellow"),
-        callback: async (html) => {
+        callback: async () => {
           await note.update({
-            "text": html.find('input').val(),
+            "text": document.querySelector('input[name="input"]').value,
             "fillColor": data.fillColorYellow
           });
           canvas.drawings.draw();
         }
       },
-      updateRed: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorRed};"></i>`,
+      {
+        action: "updateRed",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Red"),
-        callback: async (html) => {
+        callback: async () => {
           await note.update({
-            "text": html.find('input').val(),
+            "text": document.querySelector('input[name="input"]').value,
             "fillColor": data.fillColorRed
           });
           canvas.drawings.draw();
         }
       },
-      updateGreen: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorGreen};"></i>`,
+      {
+        action: "updateGreen",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Green"),
-        callback: async (html) => {
+        callback: async () => {
           await note.update({
-            "text": html.find('input').val(),
+            "text": document.querySelector('input[name="input"]').value,
             "fillColor": data.fillColorGreen
           });
           canvas.drawings.draw();
         }
       },
-      updateBlue: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorBlue};"></i>`,
+      {
+        action: "updateBlue",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Blue"),
-        callback: async (html) => {
+        callback: async () => {
           await note.update({
-            "text": html.find('input').val(),
+            "text": document.querySelector('input[name="input"]').value,
             "fillColor": data.fillColorBlue
           });
           canvas.drawings.draw();
         }
       },
-      updateCustom: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${note.fillColor};"></i>`,
+      {
+        action: "updateCustom",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Custom"),
-        callback: async (html) => {
+        callback: async () => {
           await note.update({
-            "text": html.find('input').val(),
+            "text": document.querySelector('input[name="input"]').value,
           });
           canvas.drawings.draw();
         }
       }
-    },
-    default: defaultButton,
-    close: () => {}
-  }, {
-    width: dialogWidth
+    ]
   });
-  d.render(true);
 }
 
 async function convertToNote(note, data) {
@@ -507,57 +510,58 @@ async function convertToNote(note, data) {
     data.fillColor = data.fillColorBlue;
   }
 
-  let d = new Dialog({
-    title: game.i18n.localize("STICKYNOTES.ConvertToStickyNote"),
-    content: `<input class="stickynotes text-input" type="text" value="${note.text}" autofocus />`,
-    buttons: {
-      updateYellow: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorYellow};"></i>`,
+  return foundry.applications.api.DialogV2.wait({
+    window: {
+      title: game.i18n.localize("STICKYNOTES.ConvertToStickyNote")
+    },
+    content: `<input name="input" class="stickynotes text-input" type="text" value="${note.text}" autofocus />`,
+    buttons: [
+      {
+        action: "createYellow",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Yellow"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorYellow;
           await note.update(data);
           canvas.drawings.draw();
         }
       },
-      updateRed: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorRed};"></i>`,
+      {
+        action: "createRed",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Red"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorRed;
           await note.update(data);
           canvas.drawings.draw();
         }
       },
-      updateGreen: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorGreen};"></i>`,
+      {
+        action: "createGreen",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Green"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorGreen;
           await note.update(data);
           canvas.drawings.draw();
         }
       },
-      updateBlue: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColorBlue};"></i>`,
+      {
+        action: "createBlue",
+        icon: "fa-solid fa-note-sticky",
         label: game.i18n.localize("STICKYNOTES.Blue"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
+        callback: async () => {
+          data.text = document.querySelector('input[name="input"]').value;
           data.fillColor = data.fillColorBlue;
           await note.update(data);
           canvas.drawings.draw();
         }
-      },
-    },
-    default: defaultButton,
-    close: () => {}
-  }, {
-    width: dialogWidth
+      }
+    ]
   });
-  d.render(true);
 }
 
 async function createStickyNoteMacro(data) {
@@ -592,25 +596,18 @@ async function createStickyNoteMacro(data) {
   if (!data.fontSize) {data.fontSize = 48;}
 
   // Create dialog
-  let d = new Dialog({
-    title: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
-    content: `<input class="stickynotes text-input" type="text" autofocus />`,
-    buttons: {
-      createNote: {
-        icon: `<i class="stickynotes fa-solid fa-note-sticky" style="color: ${data.fillColor};"></i>`,
-        label: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
-        callback: async (html) => {
-          data.text = html.find('input').val();
-          data.hidden = event.altKey;
-          const drawing = DrawingWithPreview.fromData(data);
-          await drawing.drawPreview();
-        }
+  await foundry.applications.api.DialogV2.input({
+    window: {title: game.i18n.localize("STICKYNOTES.CreateStickyNote")},
+    content: `<input class="stickynotes text-input" type="text" name="input" autofocus />`,
+    ok: {
+      icon: "fa-solid fa-note-sticky",
+      label: game.i18n.localize("STICKYNOTES.CreateStickyNote"),
+      callback: async () => {
+        data.text = document.querySelector('input[name="input"]').value;
+        data.hidden = event.altKey;
+        const drawing = DrawingWithPreview.fromData(data);
+        drawing.drawPreview();
       }
-    },
-    default: "createNote",
-    close: () => {}
-  }, {
-    width: dialogWidth
+    }
   });
-  d.render(true);
 }

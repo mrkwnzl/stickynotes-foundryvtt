@@ -8,6 +8,7 @@
   "STICKYNOTES.CreateStickyNote": "Sticky Note erstellen",
   "STICKYNOTES.EditStickyNote": "Sticky Note ändern",
   "STICKYNOTES.EditStickyNoteControls": "Sticky Note ändern oder konvertieren",
+  "STICKYNOTES.ConvertToStickyNote": "Zu Sticky Note konvertieren",
   "STICKYNOTES.EnableDrawingTools": "Zu Zeichenwerkzeugen wechseln",
   "STICKYNOTES.EnableDrawingToolsHint": "Wenn diese Einstellung aktiv ist, wechseln die Layerkontrollen zu den Zeichenwerkzeugen, nachdem eine Sticky Note erstellt wurde.",
   "STICKYNOTES.Small": "Klein (0.5)",
